@@ -1,5 +1,6 @@
 console.log("Kanban JS loaded...");
 
+
 // Exemple éventuel de structure
 window.addEventListener("DOMContentLoaded", () => {
   // Ici, on récupère les éléments du DOM
@@ -10,14 +11,29 @@ window.addEventListener("DOMContentLoaded", () => {
   const dropZones = document.querySelectorAll('.column');
   const toDo = document.querySelector('[data-status="todo"]');
 
+  // INIT DB
+
+  console.log(allCards);
+  for (let card of allCards) {
+    const dataId = card.dataset.id;
+    const title = card.querySelector('h3').innerText;
+    const desc = card.querySelector('p').innerText;
+    const priority = card.dataset.priority;
+    const category = card.dataset.category;
+
+    addItem(dataId,`${title}_${desc}_${priority}_${category}`)
+  }
+
+  console.log(localStorage);
+
+  const allItems = Array.from({ length: localStorage.length }, (_, i) => {
+      const key = localStorage.key(i); // Get the key
+      const value = localStorage.getItem(key); // Get the value
+      return { key, value }; // Return as an object
+  });
 
   // ADD CARD FEATURE
   // Chope le plus gros ID des cartes existantes
-  let highestId = 0;
-  allCards.forEach(card => {
-    const cardId = parseInt(card.getAttribute('data-id'), 10);
-    if (cardId > highestId) highestId = cardId;
-  });
 
   function choosePriority() {
     return new Promise((resolve) => {
@@ -57,7 +73,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const priority = await choosePriority();
 
     // ID de la carte en fonction des autres
-    const id = highestId + 1;
+    
+    const id = document.querySelectorAll('.card').length;
 
     // On créé la carte
     const newCard = document.createElement('div');
@@ -70,7 +87,9 @@ window.addEventListener("DOMContentLoaded", () => {
       <p>${texte}</p>
     `;
     addDeleteButton(newCard);
+    localStorage.setItem(id, `${title}_${texte}_${priority}_todo`);
 
+    console.log(localStorage);
     toDo.appendChild(newCard);
 
     // On compte la nouvelle carte dans le calcul du plus gros ID
@@ -116,6 +135,13 @@ window.addEventListener("DOMContentLoaded", () => {
       zone.classList.remove('hover');
       const dataId = e.dataTransfer.getData('text/plain');
       const draggedElement = document.querySelector(`[data-id="${dataId}"]`);
+      draggedElement.dataset.category = zone.dataset.status;
+
+      const title = draggedElement.querySelector('h3').innerText;
+      const desc = draggedElement.querySelector('p').innerText;
+      const priority = draggedElement.dataset.priority;
+      const category = draggedElement.dataset.category;
+      localStorage.setItem(dataId, `${title}_${desc}_${priority}_${category}`);
       zone.appendChild(draggedElement);
     });
   }
@@ -132,6 +158,7 @@ window.addEventListener("DOMContentLoaded", () => {
       if (confirm('Voulez-vous vraiment supprimer cette carte ?')) {
         card.remove(); // Supprime la carte
         console.log('Carte supprimée.');
+        removeItem(card.dataset.id);
         makeDraggable();
       }
     });
@@ -144,4 +171,53 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   makeDraggable();
+
+
+  // DISPLAY CARDS
+  function renderCards() {
+    const todo = document.getElementById('todo');
+    const doing = document.getElementById('doing');
+    const done = document.getElementById('done');
+
+    console.log(localStorage);
+
+    for (let item of allItems) {
+      const dataId = item.key;
+      const values = item.value.split('_');
+
+      if (values) {
+        const title = values[0].trim();
+        const desc = values[1].trim();
+        const priority = values[2];
+        const category = values[3];
+
+        const newCard = document.createElement('div');
+        newCard.classList.add('card');
+        newCard.setAttribute('data-id', dataId);
+        newCard.setAttribute('data-priority', priority);
+        newCard.setAttribute('draggable', 'true');
+        newCard.innerHTML = `
+        <h3>${title}</h3>
+        <p>${desc}</p>
+        `;
+        addDeleteButton(newCard);
+        
+        switch (category) {
+          case 'todo':
+            todo.appendChild(newCard);
+            break;
+          case 'doing':
+            doing.appendChild(newCard)
+            break;
+          case 'done':
+            done.appendChild(newCard);
+            break;
+          default:
+            todo.appendChild(newCard);
+        }
+        makeDraggable();
+        }
+    }
+  }
+  renderCards();
 });
