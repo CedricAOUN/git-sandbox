@@ -47,3 +47,7 @@ h1 {
   margin: 5px;
   padding: 5px 10px;
 }
+
+.hover {
+  border: 1px solid yellow;
+}
