@@ -74,6 +74,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // On compte la nouvelle carte dans le calcul du plus gros ID
     highestId = id;
+    makeDraggable();
   });
 
   searchInput.addEventListener('input', () => {
@@ -86,7 +87,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // DRAG AND DROP FEATURE
   // CARDS
-  for (let card of allCards) {
+  function makeDraggable() {
+    const everyCard = document.querySelectorAll('.card');
+    for (let card of everyCard) {
     card.addEventListener('dragstart', (e) => {
       e.dataTransfer.setData('text/plain', card.dataset.id);
       card.style.opacity = '0.5';
@@ -115,4 +118,6 @@ window.addEventListener("DOMContentLoaded", () => {
       zone.appendChild(draggedElement);
     });
   }
+  }
+  
 });
