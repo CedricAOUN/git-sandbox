@@ -7,36 +7,22 @@ window.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById('searchInput');
   const sortByPriorityBtn = document.getElementById('sortByPriorityBtn');
 
-  // Éventuellement, on écoute les événements
-  addCardBtn.addEventListener('click', () => {
-    // ...
+  const addDeleteButton = (card) => {
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Supprimer';
+    deleteBtn.className = 'delete-btn';
+
+    deleteBtn.addEventListener('click', () => {
+      if (confirm('Voulez-vous vraiment supprimer cette carte ?')) {
+        card.remove(); // Supprime la carte
+        console.log('Carte supprimée.');
+      }
+    });
+
+    card.appendChild(deleteBtn); 
+  };
+
+  document.querySelectorAll('.card').forEach((card) => {
+    addDeleteButton(card);
   });
-
-  searchInput.addEventListener('input', () => {
-    // ...
-  });
-
-  sortByPriorityBtn.addEventListener('click', () => {
-    // ...
-  });
-});
-
- // suppression de carte 
- const addDeleteButton = (card) => {
-  const deleteBtn = document.createElement('button');
-  deleteBtn.textContent = 'Supprimer';
-  deleteBtn.className = 'delete-btn';
-
-  deleteBtn.addEventListener('click', () => {
-    if (confirm('Voulez-vous vraiment supprimer cette carte ?')) {
-      card.remove(); 
-      console.log('Carte supprimée.');
-    }
-  });
-
-  card.appendChild(deleteBtn); 
-
-document.querySelectorAll('.card').forEach((card) => {
-  addDeleteButton(card);
-});
 });
