@@ -83,8 +83,37 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   sortByPriorityBtn.addEventListener('click', () => {
-  // ...
+    const columns = document.querySelectorAll('.column');
+  
+    columns.forEach(column => {
+      const header = column.querySelector('h2');
+      const cardsTable = Array.from(column.querySelectorAll('.card'));
+  
+      for (let i = 0; i < cardsTable.length; i++) {
+        for (let j = i + 1; j < cardsTable.length; j++) {
+          const priorityA = cardsTable[i].getAttribute('data-priority');
+          const priorityB = cardsTable[j].getAttribute('data-priority');
+          
+          const priorityOrder = { low: 1, medium: 2, high: 3 };
+  
+          if (priorityOrder[priorityA] < priorityOrder[priorityB]) {
+            const temp = cardsTable[i];
+            cardsTable[i] = cardsTable[j];
+            cardsTable[j] = temp;
+          }
+        }
+      }
+  
+      // Vide les colonnes et remet trié
+      column.innerHTML = '';
+      column.appendChild(header);
+      cardsTable.forEach(card => {
+        column.appendChild(card);
+      });
+    });
   });
+  
+  
 
   // DRAG AND DROP FEATURE
   // CARDS
