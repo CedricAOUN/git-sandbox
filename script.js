@@ -20,3 +20,23 @@ window.addEventListener("DOMContentLoaded", () => {
     // ...
   });
 });
+
+ // suppression de carte 
+ const addDeleteButton = (card) => {
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = 'Supprimer';
+  deleteBtn.className = 'delete-btn';
+
+  deleteBtn.addEventListener('click', () => {
+    if (confirm('Voulez-vous vraiment supprimer cette carte ?')) {
+      card.remove(); 
+      console.log('Carte supprimée.');
+    }
+  });
+
+  card.appendChild(deleteBtn); 
+
+document.querySelectorAll('.card').forEach((card) => {
+  addDeleteButton(card);
+});
+});
