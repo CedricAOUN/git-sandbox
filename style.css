@@ -1,0 +1,49 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+h1 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.kanban {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.column {
+  background: #ffffff;
+  border: 1px solid #ccc;
+  width: 250px;
+  padding: 10px;
+  border-radius: 5px;
+  min-height: 300px;
+}
+
+.column h2 {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.card {
+  background: #eee;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px;
+  cursor: grab; /* Indication pour drag & drop (optionnel) */
+}
+
+.toolbar {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.toolbar button, .toolbar input {
+  margin: 5px;
+  padding: 5px 10px;
+}
