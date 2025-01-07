@@ -69,6 +69,7 @@ window.addEventListener("DOMContentLoaded", () => {
       <h3>${title}</h3>
       <p>${texte}</p>
     `;
+    addDeleteButton(newCard);
 
     toDo.appendChild(newCard);
 
@@ -131,6 +132,7 @@ window.addEventListener("DOMContentLoaded", () => {
       if (confirm('Voulez-vous vraiment supprimer cette carte ?')) {
         card.remove(); // Supprime la carte
         console.log('Carte supprimée.');
+        makeDraggable();
       }
     });
 
@@ -140,4 +142,6 @@ window.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.card').forEach((card) => {
     addDeleteButton(card);
   });
+
+  makeDraggable();
 });
