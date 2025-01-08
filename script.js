@@ -12,7 +12,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const toDo = document.querySelector('[data-status="todo"]');
   // INIT DB
 
-  console.log(allCards);
   for (let card of allCards) {
     const dataId = card.dataset.id;
     const title = card.querySelector('h3').innerText;
@@ -23,7 +22,6 @@ window.addEventListener("DOMContentLoaded", () => {
     addItem(dataId,`${title}_${desc}_${priority}_${category}`)
   }
 
-  console.log(localStorage);
 
   const allItems = Array.from({ length: localStorage.length }, (_, i) => {
       const key = localStorage.key(i); // Get the key
@@ -38,12 +36,14 @@ window.addEventListener("DOMContentLoaded", () => {
     return new Promise((resolve) => {
       const prioritySelection = document.createElement('div');
       prioritySelection.innerHTML = `
-        <p>Sélectionner la priorité :</p>
-        <button id="lowPriorityBtn">Basse</button>
-        <button id="mediumPriorityBtn">Moyenne</button>
+        <h2>Sélectionner la priorité :</h2>
         <button id="highPriorityBtn">Haute</button>
+        <button id="mediumPriorityBtn">Moyenne</button>
+        <button id="lowPriorityBtn">Basse</button>
       `;
-      document.body.appendChild(prioritySelection);
+      document.querySelector('.priority-container').appendChild(prioritySelection);
+
+      prioritySelection.classList.add('priority-container');
 
       document.getElementById('lowPriorityBtn').addEventListener('click', () => {
         resolve('low');
@@ -69,7 +69,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // ID de la carte en fonction des autres
     
-    const id = document.querySelectorAll('.card').length;
+    const id = document.querySelectorAll('.card').length + 1;
 
     const newCard = document.createElement('div');
     newCard.classList.add('card');
@@ -81,7 +81,7 @@ window.addEventListener("DOMContentLoaded", () => {
       <p>${texte}</p>
     `;
     addDeleteButton(newCard);
-    localStorage.setItem(id, `${title}_${texte}_${priority}_todo`);
+    addItem(id, `${title}_${texte}_${priority}_todo`);
 
     console.log(localStorage);
     toDo.appendChild(newCard);
