@@ -146,3 +146,19 @@ button:hover {
 #searchInput {
   border: 1px solid black;
 }
+
+.card.low {
+  border-left: 6px solid green;
+  background-color: #e6f9e6; /* Vert clair */
+}
+
+.card.medium {
+  border-left: 6px solid yellow;
+  background-color: #fff8cc; /* Jaune clair */
+}
+
+
+.card.high {
+  border-left: 6px solid orange;
+  background-color: #ffe6cc; /* Orange clair */
+}
