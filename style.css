@@ -66,3 +66,22 @@ button.delete-btn:hover {
   background-color: #ff1a1a;
 }
 
+
+/* Dark mode */
+
+body.dark-mode {
+  background: #121212;
+  color:white;
+}
+
+body.dark-mode h1, body.dark-mode h2 {
+  color:white;
+}
+
+body.dark-mode .column {
+  background:black;
+}
+
+body.dark-mode .card {
+  color:black
+}
