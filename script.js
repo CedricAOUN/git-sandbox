@@ -121,6 +121,53 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // SEARCH FILTERS
+  searchInput.addEventListener('input', (e) => {
+    const keyword = e.target.value.toLowerCase(); // Mot-clé saisi par l'utilisateur
+
+    document.querySelectorAll('.card').forEach((card) => {
+      const title = card.querySelector('h3').textContent.toLowerCase(); // Titre de la carte
+      const content = card.querySelector('p').textContent.toLowerCase(); // Description de la carte
+
+      // Afficher ou masquer la carte selon le mot-clé
+      if (title.includes(keyword) || content.includes(keyword)) {
+        card.style.display = 'block'; // Affiche la carte si le mot-clé est présent
+      } else {
+        card.style.display = 'none'; // Cache la carte sinon
+      }
+    });
+  });
+
+  // SORT BUTTON
+  sortByPriorityBtn.addEventListener('click', () => {
+    const columns = document.querySelectorAll('.column');
+    columns.forEach(column => {
+      const header = column.querySelector('h2');
+      const cardsTable = Array.from(column.querySelectorAll('.card'));
+
+      for (let i = 0; i < cardsTable.length; i++) {
+        for (let j = i + 1; j < cardsTable.length; j++) {
+          const priorityA = cardsTable[i].getAttribute('data-priority');
+          const priorityB = cardsTable[j].getAttribute('data-priority');
+
+          const priorityOrder = { low: 1, medium: 2, high: 3 };
+
+          if (priorityOrder[priorityA] < priorityOrder[priorityB]) {
+            const temp = cardsTable[i];
+            cardsTable[i] = cardsTable[j];
+            cardsTable[j] = temp;
+          }
+        }
+      }
+
+      column.innerHTML = '';
+      column.appendChild(header);
+      cardsTable.forEach(card => {
+        column.appendChild(card);
+      });
+    });
+  });
+
   // DELETE CARD
   const addDeleteButton = (card) => {
     const deleteBtn = document.createElement('button');
