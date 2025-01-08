@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 body {
   font-family: sans-serif;
   margin: 0;
@@ -8,6 +10,11 @@ body {
 h1 {
   margin-bottom: 20px;
   text-align: center;
+  border-radius: 50px;
+}
+
+h1, h2, h3 {
+  font-family: 'Roboto', sans-serif;
 }
 
 .kanban {
@@ -20,7 +27,7 @@ h1 {
   background: #ffffff;
   border: 1px solid #ccc;
   width: 250px;
-  padding: 10px;
+  padding: 15px;
   border-radius: 5px;
   min-height: 300px;
 }
@@ -34,13 +41,16 @@ h1 {
   background: #eee;
   margin: 10px 0;
   padding: 10px;
-  border-radius: 3px;
   cursor: grab; /* Indication pour drag & drop (optionnel) */
+  box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.3);
 }
 
 .toolbar {
   margin: 20px auto;
   text-align: center;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
 }
 
 .toolbar button, .toolbar input {
@@ -48,8 +58,19 @@ h1 {
   padding: 5px 10px;
 }
 
+.toolbar input {
+  border-radius: 5px;
+  border: none;
+}
+
+.toolbar input:active {
+  border: none;
+}
+
+
 .hover {
-  border: 1px solid yellow;
+  border: 1px solid rgba(0, 218, 98, 0.541);
+  box-sizing: content-box;
 }
 
 button.delete-btn {
@@ -84,4 +105,44 @@ body.dark-mode .column {
 
 body.dark-mode .card {
   color:black
+}
+
+button {
+  border-radius: 5px;
+  background-color: rgb(0, 89, 255);
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 10px;
+  cursor: pointer;
+}
+button:hover {
+  filter: brightness(85%);
+}
+
+.priority-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+#lowPriorityBtn {
+  background-color: green;
+  color: black;
+}
+
+#mediumPriorityBtn {
+  background-color: yellow;
+  color: black;
+}
+
+#highPriorityBtn {
+  background-color: orange;
+  color: black;
+}
+
+#searchInput {
+  border: 1px solid black;
 }
